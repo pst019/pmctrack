@@ -12,13 +12,17 @@ module params
   type(datetime)    , protected :: dt_end
   character(len=256), protected :: datadir
   character(len=256), protected :: outdir
+  character(len=256), protected :: t_dim
+  character(len=256), protected :: z_dim
+  character(len=256), protected :: y_dim
+  character(len=256), protected :: x_dim
   character(len=256), protected :: vort_name
   character(len=256), protected :: u_name
   character(len=256), protected :: v_name
   character(len=256), protected :: psea_name
   character(len=256), protected :: land_name
-  character(len=256), protected :: prefix_lvl
-  character(len=256), protected :: prefix_sfc
+  character(len=256), protected :: fname_lvl
+  character(len=256), protected :: fname_sfc
   integer           , protected :: vor_lvl
   integer           , protected :: steer_lvl_btm, steer_lvl_top
   integer           , protected :: tfreq
@@ -134,13 +138,18 @@ contains
           case('steer_lvl_top'); read(buffer, *, iostat=ios) steer_lvl_top; if (dbg) write(*, *) steer_lvl_top
           case('datadir'); read(buffer, *, iostat=ios) datadir; if (dbg) write(*, *) datadir
           case('outdir'); read(buffer, *, iostat=ios) outdir; if (dbg) write(*, *) outdir
+          case('t_dim'); read(buffer, *, iostat=ios) t_dim; if (dbg) write(*, *) t_dim
+          case('z_dim'); read(buffer, *, iostat=ios) z_dim; if (dbg) write(*, *) z_dim
+          case('y_dim'); read(buffer, *, iostat=ios) y_dim; if (dbg) write(*, *) y_dim
+          case('x_dim'); read(buffer, *, iostat=ios) x_dim; if (dbg) write(*, *) x_dim
           case('vort_name'); read(buffer, *, iostat=ios) vort_name; if (dbg) write(*, *) vort_name
           case('u_name'); read(buffer, *, iostat=ios) u_name; if (dbg) write(*, *) u_name
           case('v_name'); read(buffer, *, iostat=ios) v_name; if (dbg) write(*, *) v_name
           case('psea_name'); read(buffer, *, iostat=ios) psea_name; if (dbg) write(*, *) psea_name
           case('land_name'); read(buffer, *, iostat=ios) land_name; if (dbg) write(*, *) land_name
-          case('prefix_lvl'); read(buffer, *, iostat=ios) prefix_lvl; if (dbg) write(*, *) prefix_lvl
-          case('prefix_sfc'); read(buffer, *, iostat=ios) prefix_sfc; if (dbg) write(*, *) prefix_sfc
+          case('land_mask_type'); read(buffer, *, iostat=ios) land_mask_type; if (dbg) write(*, *) land_mask_type
+          case('fname_lvl'); read(buffer, *, iostat=ios) fname_lvl; if (dbg) write(*, *) fname_lvl
+          case('fname_sfc'); read(buffer, *, iostat=ios) fname_sfc; if (dbg) write(*, *) fname_sfc
           case('tfreq'); read(buffer, *, iostat=ios) tfreq; if (dbg) write(*, *) tfreq
           case('proj'); read(buffer, *, iostat=ios) proj; if (dbg) write(*, *) proj
           case('vert_grid'); read(buffer, *, iostat=ios) vert_grid; if (dbg) write(*, *) vert_grid
@@ -260,10 +269,6 @@ contains
     nx2 = minloc(abs(lons-lon2), 1) - 1
     ny1 = minloc(abs(lats-lat1), 1) - 1
     ny2 = minloc(abs(lats-lat2), 1) - 1
-
-    ! print*, lon1, lon2, lat1, lat2
-    ! print*, nx1, nx2, ny1, ny2
-    ! stop
 
   end subroutine set_lonlat_bounds_auto
 end module params
